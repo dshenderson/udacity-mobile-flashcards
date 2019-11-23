@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components'
-import Decks from './components/Decks';
+import Deck from './components/Deck';
 
 const AppWrapper = styled.View`
   flex: 1;
@@ -14,7 +14,7 @@ const AppWrapper = styled.View`
 export default function App() {
   return (
     <AppWrapper>
-      <Decks/>
+      <Deck/>
     </AppWrapper>
   );
 }
