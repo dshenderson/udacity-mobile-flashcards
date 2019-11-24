@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import styled from '@emotion/native'
-import { ViewWrapper } from './common/ViewWrapper'
+import { ViewWrapper } from './common/Wrappers'
 import { GoBtn, AddBtn, DeleBtn } from './common/Buttons'
 
 const Heading = styled.View`
