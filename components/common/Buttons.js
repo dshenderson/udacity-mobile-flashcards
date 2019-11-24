@@ -33,25 +33,25 @@ const BtnTxt = styled.Text`
 `
 
 export const PrimaryBtn = props => (
-  <PrimaryButton>
+  <PrimaryButton {...props}>
     <BtnTxt>{props.children}</BtnTxt>
   </PrimaryButton>
 )
 
 export const SecondaryBtn = props => (
-  <SecondaryButton>
+  <SecondaryButton {...props}>
     <BtnTxt>{props.children}</BtnTxt>
   </SecondaryButton>
 )
 
 export const TertiaryBtn = props => (
-  <TertiaryButton>
+  <TertiaryButton {...props}>
     <BtnTxt>{props.children}</BtnTxt>
   </TertiaryButton>
 )
 
 export const AltBtn = props => (
-  <AltButton>
+  <AltButton {...props}>
     <BtnTxt type="dele">{props.children}</BtnTxt>
   </AltButton>
 )

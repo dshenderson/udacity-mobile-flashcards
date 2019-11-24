@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, FlatList } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import styled from '@emotion/native'
+import { AppWrapper } from './common/Wrappers'
 
 const KeinDecks = styled.View`
   flex: 1;
@@ -57,21 +58,26 @@ class Decks extends Component {
   render() {
     if (!this.state.decks.length) {
       return (
-        <KeinDecks>
-          <KeinDecksText>No decks available!</KeinDecksText>
-        </KeinDecks>
+        <AppWrapper>
+          <KeinDecks>
+            <KeinDecksText>No decks available!</KeinDecksText>
+          </KeinDecks>
+        </AppWrapper>
       );
     }
 
     return (
-      <View>
-        <FlatList data={this.state.decks} renderItem={({item: deck}) => (
-          <Deck>
-            <Title>{deck.title}</Title>
-            <Count>({deck.questions.length} cards)</Count>
-          </Deck>
-        )} keyExtractor={deck => deck.title} />
-      </View>
+      <AppWrapper>
+        <FlatList data={this.state.decks} renderItem={({item: deck}) => {
+          const {title, questions} = deck;
+          return (
+            <Deck onPress={() => this.props.navigation.navigate('Deck')}>
+              <Title>{title}</Title>
+              <Count>({questions.length} cards)</Count>
+            </Deck>
+          );
+        }} keyExtractor={deck => deck.title} />
+      </AppWrapper>
     );
   }
 }

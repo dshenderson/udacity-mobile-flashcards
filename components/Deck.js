@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import styled from '@emotion/native'
-import { ViewWrapper } from './common/Wrappers'
+import { AppWrapper, ViewWrapper } from './common/Wrappers'
 import { PrimaryBtn, SecondaryBtn, AltBtn } from './common/Buttons'
 
 const Heading = styled.View`
@@ -25,17 +25,19 @@ const ButtonsContainer = styled.View`
 class Deck extends Component {
   render() {
     return (
-      <ViewWrapper>
-        <Heading>
-          <Title>Deck 1</Title>
-          <Count>(3 cards)</Count>
-        </Heading>
-        <ButtonsContainer>
-          <PrimaryBtn>Start the Deck</PrimaryBtn>
-          <SecondaryBtn>Add a Question</SecondaryBtn>
-          <AltBtn>Delete the Deck</AltBtn>
-        </ButtonsContainer>
-      </ViewWrapper>
+      <AppWrapper>
+        <ViewWrapper>
+          <Heading>
+            <Title>Deck 1</Title>
+            <Count>(3 cards)</Count>
+          </Heading>
+          <ButtonsContainer>
+            <PrimaryBtn onPress={() => this.props.navigation.navigate('Card')}>Start the Deck</PrimaryBtn>
+            <SecondaryBtn onPress={() => this.props.navigation.navigate('CreateCard')}>Add a Question</SecondaryBtn>
+            <AltBtn>Delete the Deck</AltBtn>
+          </ButtonsContainer>
+        </ViewWrapper>
+      </AppWrapper>
     );
   }
 }

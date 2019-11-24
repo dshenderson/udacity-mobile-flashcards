@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Switch, Platform } from 'react-native';
 import styled from '@emotion/native'
 import { Entypo } from '@expo/vector-icons';
-import { ViewWrapper, CenteringWrapper } from './common/Wrappers'
+import { AppWrapper, ViewWrapper, CenteringWrapper } from './common/Wrappers'
 import { Label, TextField } from './common/FormElements'
 import { PrimaryBtn, SecondaryBtn } from './common/Buttons'
 
@@ -37,21 +37,23 @@ class Completed extends Component {
 
   render() {
     return (
-      <ViewWrapper>
-        <View>
-          <Results>{this.correct} out of {this.total}</Results>
-          <Results>({this.perc}%)</Results>
-        </View>
-        <Smiley result={this.result}><Entypo name={`emoji-${this.result}`} size={100} /></Smiley>
-        <ButtonsContainer>
-          <PrimaryBtn>
-            Try again
-          </PrimaryBtn>
-          <SecondaryBtn>
-            Go back
-          </SecondaryBtn>
-        </ButtonsContainer>
-      </ViewWrapper>
+      <AppWrapper>
+        <ViewWrapper>
+          <View>
+            <Results>{this.correct} out of {this.total}</Results>
+            <Results>({this.perc}%)</Results>
+          </View>
+          <Smiley result={this.result}><Entypo name={`emoji-${this.result}`} size={100} /></Smiley>
+          <ButtonsContainer>
+            <PrimaryBtn>
+              Try again
+            </PrimaryBtn>
+            <SecondaryBtn>
+              Go back
+            </SecondaryBtn>
+          </ButtonsContainer>
+        </ViewWrapper>
+      </AppWrapper>
     );
   }
 }

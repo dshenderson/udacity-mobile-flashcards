@@ -2,16 +2,9 @@ import React, { Component } from 'react';
 import { Text, View, Switch, Platform } from 'react-native';
 import styled from '@emotion/native'
 import { Ionicons } from '@expo/vector-icons';
-import { ViewWrapper, CenteringWrapper } from './common/Wrappers'
+import { AppWrapper, ViewWrapper, CenteringWrapper, HalfScreen } from './common/Wrappers'
 import { Label, TextField } from './common/FormElements'
 import { PrimaryBtn, TertiaryBtn } from './common/Buttons'
-
-const HalfScreen = styled.View`
-  width: 100%;
-  flex: 1;
-  justify-content: space-between;
-  align-items: center;
-`
 
 const Counter = styled.Text`
   align-self: flex-start;
@@ -53,38 +46,40 @@ class Card extends Component {
 
   render() {
     return (
-      <ViewWrapper>
-        <HalfScreen>
-          <Counter>Card 1 of 3</Counter>
-          {this.state.showAnswer ? (
-            <CenteringWrapper>
-              <Answer>42</Answer>
-            </CenteringWrapper>
-          ) : (
-            <CenteringWrapper>
-              <Question>What's the answer to life, the universe, and everything?</Question>
-            </CenteringWrapper>
-          )}
-        </HalfScreen>
+      <AppWrapper>
+        <ViewWrapper>
+          <HalfScreen>
+            <Counter>Card 1 of 3</Counter>
+            {this.state.showAnswer ? (
+              <CenteringWrapper>
+                <Answer>42</Answer>
+              </CenteringWrapper>
+            ) : (
+              <CenteringWrapper>
+                <Question>What's the answer to life, the universe, and everything?</Question>
+              </CenteringWrapper>
+            )}
+          </HalfScreen>
 
-        <HalfScreen>
-          <BigSwitch
-            value={this.state.showAnswer}
-            onValueChange={this.toggleSwitch}
-            trackColor={{true: '#99f9', false: '#c0c0c0'}}
-            thumbColor="#99f"
-          />
+          <HalfScreen>
+            <BigSwitch
+              value={this.state.showAnswer}
+              onValueChange={this.toggleSwitch}
+              trackColor={{true: '#99f9', false: '#c0c0c0'}}
+              thumbColor="#99f"
+            />
 
-          <ButtonsContainer>
-            <PrimaryBtn>
-              <Ionicons name={Platform.OS === 'ios' ? 'ios-thumbs-up' : 'md-thumbs-up'} size={75}/>
-            </PrimaryBtn>
-            <TertiaryBtn>
-              <Ionicons name={Platform.OS === 'ios' ? 'ios-thumbs-down' : 'md-thumbs-down'} size={75}/>
-            </TertiaryBtn>
-          </ButtonsContainer>
-        </HalfScreen>
-      </ViewWrapper>
+            <ButtonsContainer>
+              <PrimaryBtn>
+                <Ionicons name={Platform.OS === 'ios' ? 'ios-thumbs-up' : 'md-thumbs-up'} size={75}/>
+              </PrimaryBtn>
+              <TertiaryBtn>
+                <Ionicons name={Platform.OS === 'ios' ? 'ios-thumbs-down' : 'md-thumbs-down'} size={75}/>
+              </TertiaryBtn>
+            </ButtonsContainer>
+          </HalfScreen>
+        </ViewWrapper>
+      </AppWrapper>
     );
   }
 }

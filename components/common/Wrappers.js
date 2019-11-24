@@ -1,6 +1,14 @@
 import React from 'react'
 import styled from '@emotion/native'
 
+export const AppWrapper = styled.View`
+  flex: 1;
+  padding: ${({theme}) => theme.sizes.large} ${({theme}) => theme.sizes.normal};
+  background-color: ${({theme}) => theme.colors.blueLight};
+  align-items: center;
+  justify-content: flex-start;
+`
+
 export const ViewWrapper = styled.View`
   flex: 1;
   width: 320px;
@@ -20,5 +28,12 @@ export const FormWrapper = styled.View`
 `
 
 export const CenteringWrapper = styled.View`
+  align-items: center;
+`
+
+export const HalfScreen = styled.View`
+  width: 100%;
+  flex: 1;
+  justify-content: space-between;
   align-items: center;
 `
