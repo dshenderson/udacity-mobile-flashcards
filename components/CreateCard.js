@@ -21,8 +21,8 @@ class CreateDeck extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding">
-        <ViewWrapper layout="compact">
+      <ViewWrapper layout="compact">
+        <KeyboardAvoidingView behavior="padding">
           <FormWrapper>
             <Label>What's the question...?</Label>
             <TextField
@@ -44,8 +44,8 @@ class CreateDeck extends Component {
             />
           </FormWrapper>
           <GoBtn>Create Card</GoBtn>
-        </ViewWrapper>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </ViewWrapper>
     );
   }
 }
