@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView, View, TouchableOpacity, Text } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
 import styled from '@emotion/native'
 import { FormWrapper, ViewWrapper } from './common/Wrappers'
 import { Label, TextField } from './common/FormElements'

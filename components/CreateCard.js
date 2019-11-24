@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView, View, TouchableOpacity, Text } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
 import styled from '@emotion/native'
 import { FormWrapper, ViewWrapper } from './common/Wrappers'
 import { Label, TextField } from './common/FormElements'
 import { GoBtn } from './common/Buttons'
 
-class CreateDeck extends Component {
+class CreateCard extends Component {
   state = {
     question: '',
     answer: ''
@@ -50,4 +50,4 @@ class CreateDeck extends Component {
   }
 }
 
-export default CreateDeck;
+export default CreateCard;

@@ -18,6 +18,10 @@ const SecondaryButton = styled(BaseButton)`
   background-color: ${({theme}) => theme.colors.purple}
 `
 
+const TertiaryButton = styled(BaseButton)`
+  background-color: ${({theme}) => theme.colors.red}
+`
+
 const AltButton = styled.TouchableOpacity`
   margin: ${({theme}) => theme.sizes.normal} auto;
 `
@@ -44,4 +48,16 @@ export const DeleBtn = props => (
   <AltButton>
     <BtnTxt type="dele">{props.children}</BtnTxt>
   </AltButton>
+)
+
+export const CorrectBtn = props => (
+  <PrimaryButton>
+    <BtnTxt>{props.children}</BtnTxt>
+  </PrimaryButton>
+)
+
+export const WrongBtn = props => (
+  <TertiaryButton>
+    <BtnTxt>{props.children}</BtnTxt>
+  </TertiaryButton>
 )

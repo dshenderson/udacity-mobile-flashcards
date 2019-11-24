@@ -18,3 +18,7 @@ export const FormWrapper = styled.View`
   align-items: flex-start;
   justify-content: center;
 `
+
+export const CenteringWrapper = styled.View`
+  align-items: center;
+`
