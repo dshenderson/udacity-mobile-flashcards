@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import styled from '@emotion/native'
 import { ViewWrapper } from './common/Wrappers'
-import { GoBtn, AddBtn, DeleBtn } from './common/Buttons'
+import { PrimaryBtn, SecondaryBtn, AltBtn } from './common/Buttons'
 
 const Heading = styled.View`
   align-items: center;
@@ -31,9 +31,9 @@ class Deck extends Component {
           <Count>(3 cards)</Count>
         </Heading>
         <ButtonsContainer>
-          <GoBtn>Start the Deck</GoBtn>
-          <AddBtn>Add a Question</AddBtn>
-          <DeleBtn>Delete the Deck</DeleBtn>
+          <PrimaryBtn>Start the Deck</PrimaryBtn>
+          <SecondaryBtn>Add a Question</SecondaryBtn>
+          <AltBtn>Delete the Deck</AltBtn>
         </ButtonsContainer>
       </ViewWrapper>
     );

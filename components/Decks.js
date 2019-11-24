@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, FlatList } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
 import styled from '@emotion/native'
 
 const KeinDecks = styled.View`

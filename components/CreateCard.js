@@ -3,7 +3,7 @@ import { KeyboardAvoidingView } from 'react-native';
 import styled from '@emotion/native'
 import { FormWrapper, ViewWrapper } from './common/Wrappers'
 import { Label, TextField } from './common/FormElements'
-import { GoBtn } from './common/Buttons'
+import { PrimaryBtn } from './common/Buttons'
 
 class CreateCard extends Component {
   state = {
@@ -43,7 +43,7 @@ class CreateCard extends Component {
               underlineColorAndroid="transparent"
             />
           </FormWrapper>
-          <GoBtn>Create Card</GoBtn>
+          <PrimaryBtn>Create Card</PrimaryBtn>
         </KeyboardAvoidingView>
       </ViewWrapper>
     );

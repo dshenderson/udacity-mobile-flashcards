@@ -3,7 +3,7 @@ import { KeyboardAvoidingView } from 'react-native';
 import styled from '@emotion/native'
 import { FormWrapper, ViewWrapper } from './common/Wrappers'
 import { Label, TextField } from './common/FormElements'
-import { GoBtn } from './common/Buttons'
+import { PrimaryBtn } from './common/Buttons'
 
 class CreateDeck extends Component {
   state = {
@@ -27,7 +27,7 @@ class CreateDeck extends Component {
               underlineColorAndroid="transparent"
             />
           </FormWrapper>
-          <GoBtn>Create Deck</GoBtn>
+          <PrimaryBtn>Create Deck</PrimaryBtn>
         </ViewWrapper>
       </KeyboardAvoidingView>
     );

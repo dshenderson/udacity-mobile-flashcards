@@ -32,32 +32,26 @@ const BtnTxt = styled.Text`
   text-decoration: ${({type}) => type === 'dele' ? 'underline' : 'none'};
 `
 
-export const GoBtn = props => (
+export const PrimaryBtn = props => (
   <PrimaryButton>
     <BtnTxt>{props.children}</BtnTxt>
   </PrimaryButton>
 )
 
-export const AddBtn = props => (
+export const SecondaryBtn = props => (
   <SecondaryButton>
     <BtnTxt>{props.children}</BtnTxt>
   </SecondaryButton>
 )
 
-export const DeleBtn = props => (
-  <AltButton>
-    <BtnTxt type="dele">{props.children}</BtnTxt>
-  </AltButton>
-)
-
-export const CorrectBtn = props => (
-  <PrimaryButton>
-    <BtnTxt>{props.children}</BtnTxt>
-  </PrimaryButton>
-)
-
-export const WrongBtn = props => (
+export const TertiaryBtn = props => (
   <TertiaryButton>
     <BtnTxt>{props.children}</BtnTxt>
   </TertiaryButton>
+)
+
+export const AltBtn = props => (
+  <AltButton>
+    <BtnTxt type="dele">{props.children}</BtnTxt>
+  </AltButton>
 )

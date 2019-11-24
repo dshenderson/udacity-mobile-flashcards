@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import styled from '@emotion/native'
 import { ThemeProvider } from 'emotion-theming'
 import {theme} from './utils/theme'
-import Card from './components/Card';
+import Completed from './components/Completed';
 
 const AppWrapper = styled(View)`
   flex: 1;
@@ -17,7 +17,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <AppWrapper>
-        <Card />
+        <Completed />
       </AppWrapper>
     </ThemeProvider>
   );

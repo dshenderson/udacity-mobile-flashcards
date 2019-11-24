@@ -4,7 +4,7 @@ import styled from '@emotion/native'
 import { Ionicons } from '@expo/vector-icons';
 import { ViewWrapper, CenteringWrapper } from './common/Wrappers'
 import { Label, TextField } from './common/FormElements'
-import { CorrectBtn, WrongBtn } from './common/Buttons'
+import { PrimaryBtn, TertiaryBtn } from './common/Buttons'
 
 const HalfScreen = styled.View`
   width: 100%;
@@ -76,12 +76,12 @@ class Card extends Component {
           />
 
           <ButtonsContainer>
-            <CorrectBtn>
+            <PrimaryBtn>
               <Ionicons name={Platform.OS === 'ios' ? 'ios-thumbs-up' : 'md-thumbs-up'} size={75}/>
-            </CorrectBtn>
-            <WrongBtn>
+            </PrimaryBtn>
+            <TertiaryBtn>
               <Ionicons name={Platform.OS === 'ios' ? 'ios-thumbs-down' : 'md-thumbs-down'} size={75}/>
-            </WrongBtn>
+            </TertiaryBtn>
           </ButtonsContainer>
         </HalfScreen>
       </ViewWrapper>
