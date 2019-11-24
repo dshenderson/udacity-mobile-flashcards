@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, FlatList } from 'react-native';
-import styled from 'styled-components'
+import styled from '@emotion/native'
 
 const KeinDecks = styled.View`
   flex: 1;
@@ -8,31 +8,31 @@ const KeinDecks = styled.View`
 `
 
 const KeinDecksText = styled.Text`
-  font-size: 32px;
+  font-size: ${({theme}) => theme.sizes.large};
   font-style: italic;
-  color: #f36;
+  color: ${({theme}) => theme.colors.red};
 `
 
 const Deck = styled.TouchableOpacity`
-  width: 320px;
-  margin-bottom: 8px;
-  padding: 16px;
-  background-color: white;
+  width: ${({theme}) => theme.sizes.full};
+  margin-bottom: ${({theme}) => theme.sizes.small};
+  padding: ${({theme}) => theme.sizes.normal};
+  background-color: ${({theme}) => theme.colors.white};
   border-style: solid;
   border-width: 1px;
-  border-color: silver;
-  border-radius: 8px;
+  border-color: ${({theme}) => theme.colors.silver};
+  border-radius: ${({theme}) => theme.sizes.small};
   align-items: center;
 `
 
 const Title = styled.Text`
-  font-size: 32px;
-  color: #009;
+  font-size: ${({theme}) => theme.sizes.large};
+  color: ${({theme}) => theme.colors.blueDark};
 `
 
 const Count = styled.Text`
-  font-size: 16px;
-  color: #66c;
+  font-size: ${({theme}) => theme.sizes.normal};
+  color: ${({theme}) => theme.colors.blueDark};
 `
 
 class Decks extends Component {
