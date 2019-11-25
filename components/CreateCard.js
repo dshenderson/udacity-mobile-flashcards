@@ -19,6 +19,10 @@ class CreateCard extends Component {
     this.setState({answer: text});
   }
 
+  createCard = () => {
+    this.props.navigation.navigate('Deck');
+  }
+
   render() {
     return (
       <AppWrapper>
@@ -44,7 +48,7 @@ class CreateCard extends Component {
                 underlineColorAndroid="transparent"
               />
             </FormWrapper>
-            <PrimaryBtn>Create Card</PrimaryBtn>
+            <PrimaryBtn onPress={this.createCard}>Create Card</PrimaryBtn>
           </KeyboardAvoidingView>
         </ViewWrapper>
       </AppWrapper>

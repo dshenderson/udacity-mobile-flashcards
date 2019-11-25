@@ -44,19 +44,38 @@ class Card extends Component {
     this.setState(currentState => ({showAnswer: !currentState.showAnswer}));
   }
 
+  handleButtonPress = (isCorrect) => {
+    const {navigation} = this.props;
+    const deck = navigation.getParam('deck');
+    const {questions} = deck;
+    const card = navigation.getParam('card');
+
+    if (card + 1 < questions.length) {
+      navigation.navigate('Card', {deck, card: card + 1});
+    } else {
+      navigation.navigate('Completed', {deck});
+    }
+  }
+
   render() {
+    const {navigation} = this.props;
+    const deck = navigation.getParam('deck');
+    const card = navigation.getParam('card');
+    const {title, questions} = deck;
+    const {question, answer} = questions[card];
+
     return (
       <AppWrapper>
         <ViewWrapper>
           <HalfScreen>
-            <Counter>Card 1 of 3</Counter>
+            <Counter>{card + 1} of {questions.length}</Counter>
             {this.state.showAnswer ? (
               <CenteringWrapper>
-                <Answer>42</Answer>
+                <Answer>{answer}</Answer>
               </CenteringWrapper>
             ) : (
               <CenteringWrapper>
-                <Question>What's the answer to life, the universe, and everything?</Question>
+                <Question>{question}</Question>
               </CenteringWrapper>
             )}
           </HalfScreen>
@@ -70,10 +89,10 @@ class Card extends Component {
             />
 
             <ButtonsContainer>
-              <PrimaryBtn>
+              <PrimaryBtn onPress={() => this.handleButtonPress(true)}>
                 <Ionicons name={Platform.OS === 'ios' ? 'ios-thumbs-up' : 'md-thumbs-up'} size={75}/>
               </PrimaryBtn>
-              <TertiaryBtn>
+              <TertiaryBtn onPress={() => this.handleButtonPress(false)}>
                 <Ionicons name={Platform.OS === 'ios' ? 'ios-thumbs-down' : 'md-thumbs-down'} size={75}/>
               </TertiaryBtn>
             </ButtonsContainer>

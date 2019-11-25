@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import styled from '@emotion/native'
 import 'react-native-gesture-handler'
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import { ThemeProvider } from 'emotion-theming'
@@ -15,6 +15,23 @@ import CreateCard from './components/CreateCard';
 import Card from './components/Card';
 import Completed from './components/Completed';
 
+const Switch = createSwitchNavigator({
+  Card: {
+    screen: Card,
+    navigationOptions: {
+      title: 'Card',
+      headerTintColor: theme.colors.blueDark
+    }
+  },
+  Completed: {
+    screen: Completed,
+    navigationOptions: {
+      title: 'Deck Complete',
+      headerTintColor: theme.colors.blueDark
+    }
+  }
+})
+
 const Navigator = createStackNavigator({
   Decks: {
     screen: Decks,
@@ -25,7 +42,7 @@ const Navigator = createStackNavigator({
   Deck: {
     screen: Deck,
     navigationOptions: {
-      title: 'Deck 1',
+      title: 'Deck',
       headerTintColor: theme.colors.blueDark
     }
   },
@@ -37,16 +54,9 @@ const Navigator = createStackNavigator({
     }
   },
   Card: {
-    screen: Card,
+    screen: Switch,
     navigationOptions: {
-      title: 'Question',
-      headerTintColor: theme.colors.blueDark
-    }
-  },
-  Completed: {
-    screen: Completed,
-    navigationOptions: {
-      title: 'Deck Complete',
+      title: 'Card',
       headerTintColor: theme.colors.blueDark
     }
   }

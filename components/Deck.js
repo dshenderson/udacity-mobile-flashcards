@@ -23,18 +23,26 @@ const ButtonsContainer = styled.View`
 `
 
 class Deck extends Component {
+  deleteDeck = () => {
+    this.props.navigation.navigate('Decks');
+  }
+
   render() {
+    const {navigation} = this.props;
+    const deck = navigation.getParam('deck');
+    const {title, questions} = deck;
+
     return (
       <AppWrapper>
         <ViewWrapper>
           <Heading>
-            <Title>Deck 1</Title>
-            <Count>(3 cards)</Count>
+            <Title>{title}</Title>
+            <Count>({questions.length} cards)</Count>
           </Heading>
           <ButtonsContainer>
-            <PrimaryBtn onPress={() => this.props.navigation.navigate('Card')}>Start the Deck</PrimaryBtn>
-            <SecondaryBtn onPress={() => this.props.navigation.navigate('CreateCard')}>Add a Question</SecondaryBtn>
-            <AltBtn>Delete the Deck</AltBtn>
+            <PrimaryBtn onPress={() => navigation.navigate('Card', {deck, card: 0})}>Start the Deck</PrimaryBtn>
+            <SecondaryBtn onPress={() => navigation.navigate('CreateCard')}>Add a Question</SecondaryBtn>
+            <AltBtn onPress={this.deleteDeck}>Delete the Deck</AltBtn>
           </ButtonsContainer>
         </ViewWrapper>
       </AppWrapper>

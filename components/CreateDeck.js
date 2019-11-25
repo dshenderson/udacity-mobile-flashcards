@@ -13,6 +13,11 @@ class CreateDeck extends Component {
   handleChange = text => {
     this.setState({value: text});
   }
+
+  createDeck = () => {
+    this.props.navigation.navigate('Decks');
+  }
+
   render() {
     return (
       <AppWrapper>
@@ -28,7 +33,7 @@ class CreateDeck extends Component {
                 underlineColorAndroid="transparent"
               />
             </FormWrapper>
-            <PrimaryBtn>Create Deck</PrimaryBtn>
+            <PrimaryBtn onPress={this.createDeck}>Create Deck</PrimaryBtn>
           </ViewWrapper>
         </KeyboardAvoidingView>
       </AppWrapper>

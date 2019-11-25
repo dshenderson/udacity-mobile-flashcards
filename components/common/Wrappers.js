@@ -6,7 +6,7 @@ export const AppWrapper = styled.View`
   padding: ${({theme}) => theme.sizes.large} ${({theme}) => theme.sizes.normal};
   background-color: ${({theme}) => theme.colors.blueLight};
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
 `
 
 export const ViewWrapper = styled.View`
@@ -23,7 +23,7 @@ export const ViewWrapper = styled.View`
 `
 
 export const FormWrapper = styled.View`
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 `
 

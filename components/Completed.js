@@ -30,6 +30,13 @@ class Completed extends Component {
     this.setState(currentState => ({showAnswer: !currentState.showAnswer}));
   }
 
+  restart = () => {
+    const {navigation} = this.props;
+    const deck = navigation.getParam('deck');
+
+    navigation.navigate('Card', {deck, card: 0})
+  }
+
   correct = 1;
   total = 5;
   perc = (this.correct / this.total) * 100;
@@ -45,10 +52,10 @@ class Completed extends Component {
           </View>
           <Smiley result={this.result}><Entypo name={`emoji-${this.result}`} size={100} /></Smiley>
           <ButtonsContainer>
-            <PrimaryBtn>
+            <PrimaryBtn onPress={this.restart}>
               Try again
             </PrimaryBtn>
-            <SecondaryBtn>
+            <SecondaryBtn onPress={() => this.props.navigation.goBack(null)}>
               Go back
             </SecondaryBtn>
           </ButtonsContainer>

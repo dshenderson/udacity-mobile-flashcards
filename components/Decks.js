@@ -39,24 +39,36 @@ const Count = styled.Text`
 
 class Decks extends Component {
   state = {
-    decks: [
-      {
-        title: 'Deck 1',
-        questions: []
+    decks: {
+      React: {
+        title: 'React',
+        questions: [
+          {
+            question: 'What is React?',
+            answer: 'A library for managing user interfaces'
+          },
+          {
+            question: 'Where do you make Ajax requests in React?',
+            answer: 'The componentDidMount lifecycle event'
+          }
+        ]
       },
-      {
-        title: 'Deck 2',
-        questions: [{}, {}]
-      },
-      {
-        title: 'Deck 3',
-        questions: [{}]
+      JavaScript: {
+        title: 'JavaScript',
+        questions: [
+          {
+            question: 'What is a closure?',
+            answer: 'The combination of a function and the lexical environment within which that function was declared.'
+          }
+        ]
       }
-    ]
+    }
   }
 
   render() {
-    if (!this.state.decks.length) {
+    const decks = Object.keys(this.state.decks).map(key => this.state.decks[key]);
+
+    if (!decks.length) {
       return (
         <AppWrapper>
           <KeinDecks>
@@ -68,10 +80,10 @@ class Decks extends Component {
 
     return (
       <AppWrapper>
-        <FlatList data={this.state.decks} renderItem={({item: deck}) => {
+        <FlatList data={decks} renderItem={({item: deck}, index) => {
           const {title, questions} = deck;
           return (
-            <Deck onPress={() => this.props.navigation.navigate('Deck')}>
+            <Deck onPress={() => this.props.navigation.navigate('Deck', {deck})}>
               <Title>{title}</Title>
               <Count>({questions.length} cards)</Count>
             </Deck>

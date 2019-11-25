@@ -8,6 +8,7 @@ const BaseButton = styled.TouchableOpacity`
   border-width: 1px;
   border-color: ${({theme}) => theme.colors.silver};
   border-radius: ${({theme}) => theme.sizes.small};
+  align-items: center;
 `
 
 const PrimaryButton = styled(BaseButton)`
