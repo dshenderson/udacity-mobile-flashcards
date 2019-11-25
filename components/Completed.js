@@ -8,7 +8,7 @@ import { PrimaryBtn, SecondaryBtn } from './common/Buttons'
 
 const Results = styled.Text`
   text-align: center;
-  font-size: ${({theme}) => theme.sizes.xlarge};
+  font-size: ${({theme}) => theme.sizes.large};
   color: ${({theme}) => theme.colors.blueDark};
 `
 
@@ -22,6 +22,10 @@ const ButtonsContainer = styled.View`
 `
 
 class Completed extends Component {
+  static navigationOptions = ({navigation}) => ({
+    title: `${navigation.getParam('deck').title} Completed`
+  })
+
   state = {
     showAnswer: false
   }
@@ -43,6 +47,9 @@ class Completed extends Component {
   result = this.perc === 100 ? 'happy' : (this.perc < 50 ? 'sad' : 'neutral');
 
   render() {
+    const {navigation} = this.props;
+    const deck = navigation.getParam('deck');
+
     return (
       <AppWrapper>
         <ViewWrapper>
@@ -55,7 +62,7 @@ class Completed extends Component {
             <PrimaryBtn onPress={this.restart}>
               Try again
             </PrimaryBtn>
-            <SecondaryBtn onPress={() => this.props.navigation.goBack(null)}>
+            <SecondaryBtn onPress={() => this.props.navigation.navigate('Deck', {deck})}>
               Go back
             </SecondaryBtn>
           </ButtonsContainer>

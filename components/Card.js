@@ -36,6 +36,15 @@ const ButtonsContainer = styled.View`
 `
 
 class Card extends Component {
+  static navigationOptions = ({navigation}) => {
+    const card = navigation.getParam('card') + 1;
+    const {title, questions} = navigation.getParam('deck');
+
+    return {
+      title: `${card} of ${questions.length} (${title})`
+    }
+  }
+
   state = {
     showAnswer: false
   }

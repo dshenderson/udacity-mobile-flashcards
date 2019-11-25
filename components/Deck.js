@@ -23,6 +23,10 @@ const ButtonsContainer = styled.View`
 `
 
 class Deck extends Component {
+  static navigationOptions = ({navigation}) => ({
+    title: `Deck (${navigation.getParam('deck').title})`
+  })
+
   deleteDeck = () => {
     this.props.navigation.navigate('Decks');
   }

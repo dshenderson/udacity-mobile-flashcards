@@ -15,23 +15,6 @@ import CreateCard from './components/CreateCard';
 import Card from './components/Card';
 import Completed from './components/Completed';
 
-const Switch = createSwitchNavigator({
-  Card: {
-    screen: Card,
-    navigationOptions: {
-      title: 'Card',
-      headerTintColor: theme.colors.blueDark
-    }
-  },
-  Completed: {
-    screen: Completed,
-    navigationOptions: {
-      title: 'Deck Complete',
-      headerTintColor: theme.colors.blueDark
-    }
-  }
-})
-
 const Navigator = createStackNavigator({
   Decks: {
     screen: Decks,
@@ -40,25 +23,23 @@ const Navigator = createStackNavigator({
     }
   },
   Deck: {
-    screen: Deck,
-    navigationOptions: {
-      title: 'Deck',
-      headerTintColor: theme.colors.blueDark
-    }
+    screen: Deck
+  },
+  Card: {
+    screen: Card
+  },
+  Completed: {
+    screen: Completed
   },
   CreateCard: {
     screen: CreateCard,
     navigationOptions: {
-      title: 'Add a Question',
-      headerTintColor: theme.colors.blueDark
+      title: 'Add a Question'
     }
-  },
-  Card: {
-    screen: Switch,
-    navigationOptions: {
-      title: 'Card',
-      headerTintColor: theme.colors.blueDark
-    }
+  }
+}, {
+  defaultNavigationOptions: {
+    headerTintColor: theme.colors.blueDark
   }
 })
 
