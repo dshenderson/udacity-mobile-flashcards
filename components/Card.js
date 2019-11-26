@@ -77,6 +77,7 @@ class Card extends Component {
     if (next < questions.length) {
       navigation.navigate('Card', {deck, card: next, answeredCorrectly});
     } else {
+      this.setState({answeredCorrectly: 0});
       navigation.navigate('Completed', {deck, answeredCorrectly});
     }
   }

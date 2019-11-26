@@ -32,7 +32,13 @@ class Deck extends Component {
   render() {
     const {decks, dispatch, navigation} = this.props;
     const deck = navigation.getParam('deck');
-    const {title, questions} = decks[deck.title];
+    const thisDeck = decks[deck.title];
+
+    if (!thisDeck) {
+      return null;
+    }
+
+    const {title, questions} = thisDeck;
 
     return (
       <AppWrapper>
