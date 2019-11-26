@@ -1,45 +1,23 @@
-// import AsyncStorage from '@react-native-community/async-storage';
-//
-// const STORAGE_KEY = '@mobileFlashcards'
+import {AsyncStorage} from 'react-native';
 
-let decks = {
-  // React: {
-  //   title: 'React',
-  //   questions: [
-  //     {
-  //       question: 'What is React?',
-  //       answer: 'A library for managing user interfaces'
-  //     },
-  //     {
-  //       question: 'Where do you make Ajax requests in React?',
-  //       answer: 'The componentDidMount lifecycle event'
-  //     }
-  //   ]
-  // },
-  // JavaScript: {
-  //   title: 'JavaScript',
-  //   questions: [
-  //     {
-  //       question: 'What is a closure?',
-  //       answer: 'The combination of a function and the lexical environment within which that function was declared.'
-  //     }
-  //   ]
-  // }
+const STORAGE_KEY = '@mobileFlashcards';
+
+let decks;
+
+export const _getDecks = async () => {
+  const value = await AsyncStorage.getItem(STORAGE_KEY);
+
+  if (value !== null) {
+    decks = JSON.parse(value);
+  } else {
+    decks = {};
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+  }
+
+  return decks;
 }
 
-// export function _getDecks() {
-//   return AsyncStorage.getData(STORAGE_KEY, JSON.stringify({
-//     [key]: entry
-//   }))
-// }
-
-export function _getDecks() {
-  return new Promise(res => {
-    setTimeout(() => res({...decks}), 1000);
-  });
-}
-
-export function _addDeck(deck) {
+export const _addDeck = async (deck) => {
   const formattedDeck = {
     [deck]: {
       title: deck,
@@ -47,87 +25,50 @@ export function _addDeck(deck) {
     }
   };
 
-  return new Promise(res => {
-    setTimeout(() => {
-      decks = {
-        ...decks,
-        [deck]: {
-          title: deck,
-          questions: []
-        }
-      };
+  decks = {
+    ...decks,
+    ...formattedDeck
+  };
 
-      res(formattedDeck);
-    }, 1000);
-  });
+  AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+
+  return formattedDeck;
 }
 
-export function _deleteDeck(deck) {
-  return new Promise(res => {
-    setTimeout(() => {
-      decks[deck] = undefined;
-      delete decks[deck];
+export const _deleteDeck = async (deck) => {
+  delete decks[deck];
+  AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
 
-      res(deck);
-    }, 1000);
-  });
+  return deck;
 }
 
-export function _addCard(deck, card) {
-  return new Promise(res => {
-    setTimeout(() => {
-      decks = {
-        ...decks,
-        [deck]: {
-          title: deck,
-          questions: [
-            ...decks[deck].questions,
-            card
-          ]
-        }
-      };
+export const _addCard = async (deck, card) => {
+  decks = {
+    ...decks,
+    [deck]: {
+      title: deck,
+      questions: [
+        ...decks[deck].questions,
+        card
+      ]
+    }
+  };
 
-      res({deck, card});
-    }, 1000);
-  });
+  AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+
+  return {deck, card};
 }
 
-export function _deleteCard(deck, card) {
-  return new Promise(res => {
-    setTimeout(() => {
-      decks = {
-        ...decks,
-        [deck]: {
-          title: deck,
-          questions: decks[deck].questions.filter(question => question.question !== card)
-        }
-      };
+export const _deleteCard = async (deck, card) => {
+  decks = {
+    ...decks,
+    [deck]: {
+      title: deck,
+      questions: decks[deck].questions.filter(question => question.question !== card)
+    }
+  };
 
-      res({deck, card});
-    })
-  }).catch(e => {
-    console.error(e)
-  })
+  AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+
+  return {deck, card};
 }
-
-// export function getDecks(id) {
-//   return AsyncStorage.getData(STORAGE_KEY, JSON.stringify({
-//     [key]: entry
-//   }))
-// }
-//
-// export function getDecks() {
-//   return AsyncStorage.getData(STORAGE_KEY, JSON.stringify({
-//     [key]: entry
-//   }))
-// }
-//
-// export function removeEntry(key) {
-//   return AsyncStorage.getItem(STORAGE_KEY)
-//     .then(results => {
-//       const data = JSON.parse(results);
-//       data[key] = undefined
-//       delete data[key]
-//       AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(data))
-//     })
-// }
