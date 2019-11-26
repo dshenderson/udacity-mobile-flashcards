@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, FlatList } from 'react-native';
-import { createStackNavigator } from 'react-navigation-stack';
 import styled from '@emotion/native'
-import { AppWrapper } from './common/Wrappers'
+import { connect } from 'react-redux'
+import {handleGetDecks} from '../actions'
+import {isEmpty} from '../utils/helpers';
+import { AppWrapper, ViewWrapper } from './common/Wrappers'
 
-const KeinDecks = styled.View`
-  flex: 1;
+const KeinDecks = styled(ViewWrapper)`
   justify-content: center;
 `
 
@@ -38,37 +39,18 @@ const Count = styled.Text`
 `
 
 class Decks extends Component {
-  state = {
-    decks: {
-      React: {
-        title: 'React',
-        questions: [
-          {
-            question: 'What is React?',
-            answer: 'A library for managing user interfaces'
-          },
-          {
-            question: 'Where do you make Ajax requests in React?',
-            answer: 'The componentDidMount lifecycle event'
-          }
-        ]
-      },
-      JavaScript: {
-        title: 'JavaScript',
-        questions: [
-          {
-            question: 'What is a closure?',
-            answer: 'The combination of a function and the lexical environment within which that function was declared.'
-          }
-        ]
-      }
+  componentDidMount() {
+    const {decks, dispatch} = this.props;
+
+    if (isEmpty(decks)) {
+      dispatch(handleGetDecks());
     }
   }
 
   render() {
-    const decks = Object.keys(this.state.decks).map(key => this.state.decks[key]);
+    const {decks} = this.props;
 
-    if (!decks.length) {
+    if (isEmpty(decks)) {
       return (
         <AppWrapper>
           <KeinDecks>
@@ -78,14 +60,16 @@ class Decks extends Component {
       );
     }
 
+    const deckArray = Object.keys(decks).map(key => decks[key]);
+
     return (
       <AppWrapper>
-        <FlatList data={decks} renderItem={({item: deck}, index) => {
+        <FlatList data={deckArray} renderItem={({item: deck}, index) => {
           const {title, questions} = deck;
           return (
             <Deck onPress={() => this.props.navigation.navigate('Deck', {deck})}>
               <Title>{title}</Title>
-              <Count>({questions.length} cards)</Count>
+              <Count>({questions && questions.length} cards)</Count>
             </Deck>
           );
         }} keyExtractor={deck => deck.title} />
@@ -94,4 +78,8 @@ class Decks extends Component {
   }
 }
 
-export default Decks;
+function mapStateToProps(decks) {
+  return {decks};
+}
+
+export default connect(mapStateToProps)(Decks);

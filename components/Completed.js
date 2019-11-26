@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, Switch, Platform } from 'react-native';
+import { Text, View } from 'react-native';
 import styled from '@emotion/native'
+import { connect } from 'react-redux'
 import { Entypo } from '@expo/vector-icons';
-import { AppWrapper, ViewWrapper, CenteringWrapper } from './common/Wrappers'
-import { Label, TextField } from './common/FormElements'
+import { AppWrapper, ViewWrapper } from './common/Wrappers'
 import { PrimaryBtn, SecondaryBtn } from './common/Buttons'
 
 const Results = styled.Text`
@@ -23,46 +23,40 @@ const ButtonsContainer = styled.View`
 
 class Completed extends Component {
   static navigationOptions = ({navigation}) => ({
-    title: `${navigation.getParam('deck').title} Completed`
+    title: `${navigation.getParam('deck').title} (Completed)`
   })
 
-  state = {
-    showAnswer: false
-  }
-
-  toggleSwitch = () => {
-    this.setState(currentState => ({showAnswer: !currentState.showAnswer}));
-  }
-
-  restart = () => {
-    const {navigation} = this.props;
+  getResults = () => {
+    const {decks, navigation} = this.props;
+    const correct = navigation.getParam('answeredCorrectly');
     const deck = navigation.getParam('deck');
+    const {questions} = decks[deck.title];
+    const total = questions.length;
+    const perc = (correct / total) * 100;
+    const grade = perc === 100 ? 'happy' : (perc < 50 ? 'sad' : 'neutral');
 
-    navigation.navigate('Card', {deck, card: 0})
+    return {correct, total, perc, grade};
   }
-
-  correct = 1;
-  total = 5;
-  perc = (this.correct / this.total) * 100;
-  result = this.perc === 100 ? 'happy' : (this.perc < 50 ? 'sad' : 'neutral');
 
   render() {
     const {navigation} = this.props;
     const deck = navigation.getParam('deck');
 
+    const {correct, total, perc, grade} = this.getResults();
+
     return (
       <AppWrapper>
         <ViewWrapper>
           <View>
-            <Results>{this.correct} out of {this.total}</Results>
-            <Results>({this.perc}%)</Results>
+            <Results>{correct} out of {total}</Results>
+            <Results>({perc}%)</Results>
           </View>
-          <Smiley result={this.result}><Entypo name={`emoji-${this.result}`} size={100} /></Smiley>
+          <Smiley result={grade}><Entypo name={`emoji-${grade}`} size={100} /></Smiley>
           <ButtonsContainer>
-            <PrimaryBtn onPress={this.restart}>
+            <PrimaryBtn onPress={() => navigation.navigate('Card', {deck, card: 0, answeredCorrectly: 0})}>
               Try again
             </PrimaryBtn>
-            <SecondaryBtn onPress={() => this.props.navigation.navigate('Deck', {deck})}>
+            <SecondaryBtn onPress={() => navigation.navigate('Deck', {deck})}>
               Go back
             </SecondaryBtn>
           </ButtonsContainer>
@@ -72,4 +66,8 @@ class Completed extends Component {
   }
 }
 
-export default Completed;
+function mapStateToProps(decks) {
+  return {decks};
+}
+
+export default connect(mapStateToProps)(Completed);

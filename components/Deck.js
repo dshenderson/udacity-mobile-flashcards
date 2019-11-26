@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import styled from '@emotion/native'
+import { connect } from 'react-redux'
+import { handleDeleteDeck } from '../actions'
 import { AppWrapper, ViewWrapper } from './common/Wrappers'
 import { PrimaryBtn, SecondaryBtn, AltBtn } from './common/Buttons'
 
@@ -27,26 +29,24 @@ class Deck extends Component {
     title: `Deck (${navigation.getParam('deck').title})`
   })
 
-  deleteDeck = () => {
-    this.props.navigation.navigate('Decks');
-  }
-
   render() {
-    const {navigation} = this.props;
+    const {decks, dispatch, navigation} = this.props;
     const deck = navigation.getParam('deck');
-    const {title, questions} = deck;
+    const {title, questions} = decks[deck.title];
 
     return (
       <AppWrapper>
         <ViewWrapper>
           <Heading>
             <Title>{title}</Title>
-            <Count>({questions.length} cards)</Count>
+            <Count>({questions && questions.length} cards)</Count>
           </Heading>
           <ButtonsContainer>
-            <PrimaryBtn onPress={() => navigation.navigate('Card', {deck, card: 0})}>Start the Deck</PrimaryBtn>
-            <SecondaryBtn onPress={() => navigation.navigate('CreateCard')}>Add a Question</SecondaryBtn>
-            <AltBtn onPress={this.deleteDeck}>Delete the Deck</AltBtn>
+            {!!questions.length && (
+              <PrimaryBtn onPress={() => navigation.navigate('Card', {deck, card: 0})}>Start the Deck</PrimaryBtn>
+            )}
+            <SecondaryBtn onPress={() => navigation.navigate('CreateCard', {deck})}>Add a Card</SecondaryBtn>
+            <AltBtn onPress={() => dispatch(handleDeleteDeck(title))}>Delete this Deck</AltBtn>
           </ButtonsContainer>
         </ViewWrapper>
       </AppWrapper>
@@ -54,4 +54,8 @@ class Deck extends Component {
   }
 }
 
-export default Deck;
+function mapStateToProps(decks) {
+  return {decks};
+}
+
+export default connect(mapStateToProps)(Deck);

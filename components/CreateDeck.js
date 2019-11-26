@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
-import styled from '@emotion/native'
+import { connect } from 'react-redux';
+import {handleAddDeck} from '../actions';
 import { AppWrapper, FormWrapper, ViewWrapper } from './common/Wrappers'
-import { Label, TextField } from './common/FormElements'
+import { TextField } from './common/FormElements'
 import { PrimaryBtn } from './common/Buttons'
 
 class CreateDeck extends Component {
@@ -15,7 +16,11 @@ class CreateDeck extends Component {
   }
 
   createDeck = () => {
-    this.props.navigation.navigate('Decks');
+    const {dispatch, navigation} = this.props;
+
+    dispatch(handleAddDeck(this.state.value));
+
+    this.setState({value: ''});
   }
 
   render() {
@@ -24,7 +29,6 @@ class CreateDeck extends Component {
         <KeyboardAvoidingView behavior="padding">
           <ViewWrapper layout="compact">
             <FormWrapper>
-              <Label>Deck name?</Label>
               <TextField
                 placeholder="Enter a name"
                 placeholderTextColor="silver"
@@ -33,7 +37,7 @@ class CreateDeck extends Component {
                 underlineColorAndroid="transparent"
               />
             </FormWrapper>
-            <PrimaryBtn onPress={this.createDeck}>Create Deck</PrimaryBtn>
+            <PrimaryBtn onPress={this.createDeck} disabled={!this.state.value}>Create Deck</PrimaryBtn>
           </ViewWrapper>
         </KeyboardAvoidingView>
       </AppWrapper>
@@ -41,4 +45,4 @@ class CreateDeck extends Component {
   }
 }
 
-export default CreateDeck;
+export default connect()(CreateDeck);

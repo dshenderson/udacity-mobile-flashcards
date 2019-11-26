@@ -1,13 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
-import styled from '@emotion/native'
-import 'react-native-gesture-handler'
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './reducers';
+import middleware from './middleware';
 import { ThemeProvider } from 'emotion-theming'
 import { FontAwesome } from '@expo/vector-icons';
 import {theme} from './utils/theme'
+import NavigationService from './NavigationService';
 import Deck from './components/Deck';
 import Decks from './components/Decks';
 import CreateDeck from './components/CreateDeck';
@@ -67,10 +69,16 @@ const Tabs = createBottomTabNavigator({
 
 const AppContainer = createAppContainer(Tabs);
 
+const store = createStore(reducer, middleware);
+
 export default function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <AppContainer />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <AppContainer ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef);
+        }} />
+      </ThemeProvider>
+    </Provider>
   );
 }

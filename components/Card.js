@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Text, View, Switch, Platform } from 'react-native';
 import styled from '@emotion/native'
 import { Ionicons } from '@expo/vector-icons';
+import { connect } from 'react-redux'
+import { handleDeleteCard } from '../actions'
 import { AppWrapper, ViewWrapper, CenteringWrapper, HalfScreen } from './common/Wrappers'
-import { Label, TextField } from './common/FormElements'
-import { PrimaryBtn, TertiaryBtn } from './common/Buttons'
+import { PrimaryBtn, TertiaryBtn, AltBtn } from './common/Buttons'
 
 const Counter = styled.Text`
   align-self: flex-start;
@@ -31,22 +32,27 @@ const BigSwitch = styled.Switch`
 
 const ButtonsContainer = styled.View`
   flex-direction: row;
+  flex-wrap: wrap;
   width: 100%;
   justify-content: space-around;
+  margin-bottom: ${({theme}) => theme.sizes.large};
+`
+
+const DeleteBtn = styled(AltBtn)`
+  width: 100%;
+  margin-top: 0;
+  flex-direction: row;
+  justify-content: center;
 `
 
 class Card extends Component {
-  static navigationOptions = ({navigation}) => {
-    const card = navigation.getParam('card') + 1;
-    const {title, questions} = navigation.getParam('deck');
-
-    return {
-      title: `${card} of ${questions.length} (${title})`
-    }
-  }
+  static navigationOptions = ({navigation}) => ({
+    title: `${navigation.getParam('deck').title} (In progress)`
+  })
 
   state = {
-    showAnswer: false
+    showAnswer: false,
+    answeredCorrectly: this.props.navigation.getParam('answeredCorrectly') || 0
   }
 
   toggleSwitch = () => {
@@ -54,24 +60,44 @@ class Card extends Component {
   }
 
   handleButtonPress = (isCorrect) => {
-    const {navigation} = this.props;
+    const {decks, navigation} = this.props;
     const deck = navigation.getParam('deck');
-    const {questions} = deck;
+    const {questions} = decks[deck.title];
     const card = navigation.getParam('card');
 
-    if (card + 1 < questions.length) {
-      navigation.navigate('Card', {deck, card: card + 1});
+    let {answeredCorrectly} = this.state;
+
+    if (isCorrect) {
+      answeredCorrectly += 1;
+      this.setState({answeredCorrectly});
+    }
+
+    const next = card + 1;
+
+    if (next < questions.length) {
+      navigation.navigate('Card', {deck, card: next, answeredCorrectly});
     } else {
-      navigation.navigate('Completed', {deck});
+      navigation.navigate('Completed', {deck, answeredCorrectly});
     }
   }
 
+  deleteCard = (deck, card) => {
+    const {dispatch} = this.props;
+    dispatch(handleDeleteCard(deck, card));
+  }
+
   render() {
-    const {navigation} = this.props;
+    const {decks, navigation} = this.props;
     const deck = navigation.getParam('deck');
     const card = navigation.getParam('card');
-    const {title, questions} = deck;
-    const {question, answer} = questions[card];
+    const {title, questions} = decks[deck.title];
+    const questionsCard = questions[card];
+
+    if (!questionsCard) {
+      return null
+    }
+
+    const {question, answer} = questionsCard;
 
     return (
       <AppWrapper>
@@ -99,11 +125,12 @@ class Card extends Component {
 
             <ButtonsContainer>
               <PrimaryBtn onPress={() => this.handleButtonPress(true)}>
-                <Ionicons name={Platform.OS === 'ios' ? 'ios-thumbs-up' : 'md-thumbs-up'} size={75}/>
+                <Ionicons name={Platform.OS === 'ios' ? 'ios-thumbs-up' : 'md-thumbs-up'} size={65}/>
               </PrimaryBtn>
               <TertiaryBtn onPress={() => this.handleButtonPress(false)}>
-                <Ionicons name={Platform.OS === 'ios' ? 'ios-thumbs-down' : 'md-thumbs-down'} size={75}/>
+                <Ionicons name={Platform.OS === 'ios' ? 'ios-thumbs-down' : 'md-thumbs-down'} size={65}/>
               </TertiaryBtn>
+              <DeleteBtn onPress={() => this.deleteCard(title, question)}>Delete this Card</DeleteBtn>
             </ButtonsContainer>
           </HalfScreen>
         </ViewWrapper>
@@ -112,4 +139,8 @@ class Card extends Component {
   }
 }
 
-export default Card;
+function mapStateToProps(decks) {
+  return {decks};
+}
+
+export default connect(mapStateToProps)(Card);

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
-import styled from '@emotion/native'
+import { connect } from 'react-redux'
+import { handleAddCard } from '../actions'
 import { AppWrapper, FormWrapper, ViewWrapper } from './common/Wrappers'
-import { Label, TextField } from './common/FormElements'
+import { TextField } from './common/FormElements'
 import { PrimaryBtn } from './common/Buttons'
 
 class CreateCard extends Component {
@@ -20,7 +21,14 @@ class CreateCard extends Component {
   }
 
   createCard = () => {
-    this.props.navigation.navigate('Deck');
+    const {question, answer} = this.state;
+    const {dispatch, navigation} = this.props;
+    const {title: deck} = navigation.getParam('deck');
+    const card = {question, answer};
+
+    dispatch(handleAddCard(deck, card));
+
+    this.setState({question: '', answer: ''});
   }
 
   render() {
@@ -29,7 +37,6 @@ class CreateCard extends Component {
         <ViewWrapper layout="compact">
           <KeyboardAvoidingView behavior="padding">
             <FormWrapper>
-              <Label>What's the question...?</Label>
               <TextField
                 placeholder="Enter a question"
                 placeholderTextColor="silver"
@@ -39,7 +46,6 @@ class CreateCard extends Component {
             />
             </FormWrapper>
             <FormWrapper>
-              <Label>...and the answer?</Label>
               <TextField
                 placeholder="Enter an answer"
                 placeholderTextColor="silver"
@@ -48,7 +54,9 @@ class CreateCard extends Component {
                 underlineColorAndroid="transparent"
               />
             </FormWrapper>
-            <PrimaryBtn onPress={this.createCard}>Create Card</PrimaryBtn>
+            <PrimaryBtn onPress={this.createCard} disabled={!this.state.question || !this.state.answer}>
+              Create Card
+            </PrimaryBtn>
           </KeyboardAvoidingView>
         </ViewWrapper>
       </AppWrapper>
@@ -56,4 +64,4 @@ class CreateCard extends Component {
   }
 }
 
-export default CreateCard;
+export default connect()(CreateCard);
