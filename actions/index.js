@@ -38,7 +38,7 @@ export function handleAddDeck(deck) {
   return dispatch => {
     return _addDeck(deck)
       .then(deck => dispatch(addDeck(deck)))
-      .then(() => NavigationService.navigate('Decks'));
+      .then(() => NavigationService.navigate('Deck', {deck: {title: deck, questions: []}}));
   };
 }
 
