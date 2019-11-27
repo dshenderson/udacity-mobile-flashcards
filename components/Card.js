@@ -65,6 +65,8 @@ class Card extends Component {
     const {questions} = decks[deck.title];
     const card = navigation.getParam('card');
 
+    this.setState({showAnswer: false});
+
     let {answeredCorrectly} = this.state;
 
     if (isCorrect) {
