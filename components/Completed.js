@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Entypo } from '@expo/vector-icons';
 import { AppWrapper, ViewWrapper } from './common/Wrappers'
 import { PrimaryBtn, SecondaryBtn } from './common/Buttons'
+import {clearLocalNotification, setLocalNotification} from '../utils/helpers'
 
 const Results = styled.Text`
   text-align: center;
@@ -43,6 +44,9 @@ class Completed extends Component {
     const deck = navigation.getParam('deck');
 
     const {correct, total, perc, grade} = this.getResults();
+
+    clearLocalNotification()
+      .then(setLocalNotification);
 
     return (
       <AppWrapper>

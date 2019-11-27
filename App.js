@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -16,6 +16,7 @@ import CreateDeck from './components/CreateDeck';
 import CreateCard from './components/CreateCard';
 import Card from './components/Card';
 import Completed from './components/Completed';
+import {setLocalNotification} from './utils/helpers'
 
 const Navigator = createStackNavigator({
   Decks: {
@@ -71,14 +72,20 @@ const AppContainer = createAppContainer(Tabs);
 
 const store = createStore(reducer, middleware);
 
-export default function App() {
-  return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <AppContainer ref={navigatorRef => {
-          NavigationService.setTopLevelNavigator(navigatorRef);
-        }} />
-      </ThemeProvider>
-    </Provider>
-  );
+export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <AppContainer ref={navigatorRef => {
+            NavigationService.setTopLevelNavigator(navigatorRef);
+          }} />
+        </ThemeProvider>
+      </Provider>
+    );
+  }
 }
